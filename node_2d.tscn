@@ -1,0 +1,80 @@
+[gd_scene load_steps=11 format=3 uid="uid://bikg20lmcmbxl"]
+
+[ext_resource type="Texture2D" uid="uid://dufhii16cqsxg" path="res://assets/Sprites.png" id="1_0e48y"]
+[ext_resource type="Script" uid="uid://d3v2fcihyutup" path="res://src/game_area.gd" id="2_epypp"]
+[ext_resource type="Script" uid="uid://dhfrqymt8a10o" path="res://src/game_manager.gd" id="3_epypp"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0hol4"]
+atlas = ExtResource("1_0e48y")
+region = Rect2(0, 0, 213, 288)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q6r6c"]
+atlas = ExtResource("1_0e48y")
+region = Rect2(213, 0, 213, 288)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kdubu"]
+atlas = ExtResource("1_0e48y")
+region = Rect2(426, 0, 213, 288)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d21ai"]
+atlas = ExtResource("1_0e48y")
+region = Rect2(639, 0, 213, 288)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rj586"]
+atlas = ExtResource("1_0e48y")
+region = Rect2(852, 0, 213, 288)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4d7sh"]
+atlas = ExtResource("1_0e48y")
+region = Rect2(1065, 0, 213, 288)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ir8iy"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0hol4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q6r6c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kdubu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d21ai")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rj586")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4d7sh")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="root" type="Node2D"]
+
+[node name="ham" type="AnimatedSprite2D" parent="."]
+position = Vector2(501, 651)
+scale = Vector2(0.753521, 0.753521)
+sprite_frames = SubResource("SpriteFrames_ir8iy")
+
+[node name="gameArea" type="Node2D" parent="."]
+script = ExtResource("2_epypp")
+
+[node name="topRightLimit" type="Marker2D" parent="gameArea"]
+position = Vector2(432, 76)
+gizmo_extents = 316.3
+
+[node name="bottomLeftLimit" type="Marker2D" parent="gameArea"]
+position = Vector2(46, 756)
+gizmo_extents = 316.3
+
+[node name="cellToprightLimit" type="Marker2D" parent="gameArea"]
+position = Vector2(105, 692)
+gizmo_extents = 316.3
+
+[node name="GameManager" type="Node" parent="."]
+script = ExtResource("3_epypp")
