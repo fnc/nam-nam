@@ -11,8 +11,13 @@ config_version=5
 [application]
 
 config/name="Nam nam"
+run/main_scene="uid://c6t2e3iex3esh"
 config/features=PackedStringArray("4.4", "Mobile")
 config/icon="res://icon.svg"
+
+[autoload]
+
+AudioManager="*res://audio_manager.tscn"
 
 [display]
 

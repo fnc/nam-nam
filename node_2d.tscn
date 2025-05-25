@@ -79,3 +79,14 @@ gizmo_extents = 316.3
 [node name="GameManager" type="Node" parent="."]
 script = ExtResource("3_epypp")
 gravity_interval = 1.0
+
+[node name="Background" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="TextureRect" type="ColorRect" parent="Background"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.255177, 0.37, 0.1887, 1)
