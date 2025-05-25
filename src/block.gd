@@ -4,7 +4,6 @@ enum BlockType { RED, BLUE, GREEN, YELLOW }
 var color_type: BlockType
 var grid_pos: Vector2  # This will store the Block's position in the grid
 
-
 # Function to assign a random type when spawned
 func set_random_type():
 	color_type = BlockType.values().pick_random()
@@ -16,4 +15,6 @@ func set_random_type():
 		BlockType.GREEN:
 			$Sprite2D.texture = preload("res://assets/bad_block_a.tres")
 		BlockType.YELLOW:
+			$Sprite2D.texture = preload("res://assets/bad_block_b.tres")
+		_:
 			$Sprite2D.texture = preload("res://assets/bad_block_b.tres")
