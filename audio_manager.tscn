@@ -1,0 +1,27 @@
+[gd_scene load_steps=2 format=3 uid="uid://y5preepa7g7x"]
+
+[ext_resource type="Script" uid="uid://cblq28kj8q23w" path="res://src/audio_manager.gd" id="1_jisk1"]
+
+[node name="AudioManager" type="Node" node_paths=PackedStringArray("eat", "positive_reaction", "negative_reaction", "nice_combo", "bg_music")]
+script = ExtResource("1_jisk1")
+eat = NodePath("Sfx/Eat")
+positive_reaction = NodePath("Sfx/PositiveReaction")
+negative_reaction = NodePath("Sfx/NegativeReaction")
+nice_combo = NodePath("Sfx/NiceCombo")
+bg_music = NodePath("Mx/BgMusic")
+
+[node name="Sfx" type="Node" parent="."]
+
+[node name="Eat" type="AudioStreamPlayer" parent="Sfx"]
+
+[node name="PositiveReaction" type="AudioStreamPlayer" parent="Sfx"]
+
+[node name="NegativeReaction" type="AudioStreamPlayer" parent="Sfx"]
+
+[node name="NiceCombo" type="AudioStreamPlayer" parent="Sfx"]
+
+[node name="BadCombo" type="AudioStreamPlayer" parent="Sfx"]
+
+[node name="Mx" type="Node" parent="."]
+
+[node name="BgMusic" type="AudioStreamPlayer" parent="Mx"]
