@@ -56,6 +56,26 @@ animations = [{
 
 [node name="root" type="Node2D"]
 
+[node name="Background" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="Control" type="Control" parent="Background"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="ColorRect" parent="Background/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.696, 1, 0.52, 1)
+
 [node name="ham" type="AnimatedSprite2D" parent="."]
 position = Vector2(501, 651)
 scale = Vector2(0.753521, 0.753521)
@@ -79,14 +99,3 @@ gizmo_extents = 316.3
 [node name="GameManager" type="Node" parent="."]
 script = ExtResource("3_epypp")
 gravity_interval = 1.0
-
-[node name="Background" type="CanvasLayer" parent="."]
-layer = -1
-
-[node name="TextureRect" type="ColorRect" parent="Background"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.255177, 0.37, 0.1887, 1)

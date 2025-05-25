@@ -1,11 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://c6t2e3iex3esh"]
+[gd_scene load_steps=8 format=3 uid="uid://c6t2e3iex3esh"]
 
 [ext_resource type="Script" uid="uid://cbnyc51i5hhri" path="res://src/main_menu.gd" id="1_06t4h"]
 [ext_resource type="PackedScene" uid="uid://bikg20lmcmbxl" path="res://node_2d.tscn" id="2_7vrkn"]
 [ext_resource type="Texture2D" uid="uid://cu8avonayx1jw" path="res://assets/Portada sin botones.png" id="3_fu7sn"]
-[ext_resource type="FontFile" uid="uid://cd5s8umn84nw1" path="res://assets/font/Buycat.ttf" id="4_jix8l"]
+[ext_resource type="FontFile" uid="uid://ba4wb48gr6auk" path="res://assets/font/GochiHand-Regular.ttf" id="4_jix8l"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_glbon"]
+font = ExtResource("4_jix8l")
 font_size = 41
 outline_color = Color(0.255177, 0.37, 0.1887, 1)
 shadow_size = 16
@@ -14,6 +15,14 @@ shadow_offset = Vector2(-3.895, 6.675)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jix8l"]
 bg_color = Color(0.13, 0.13, 0.13, 1)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+expand_margin_top = 4.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_glbon"]
+bg_color = Color(0.255177, 0.37, 0.1887, 1)
 corner_radius_top_left = 30
 corner_radius_top_right = 30
 corner_radius_bottom_right = 30
@@ -66,8 +75,7 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="Control/CenterContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("4_jix8l")
-text = "NAM-NAM"
+text = "ÑAM-ÑAM"
 label_settings = SubResource("LabelSettings_glbon")
 
 [node name="Button" type="Button" parent="Control/CenterContainer/VBoxContainer"]
@@ -75,6 +83,16 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.696, 1, 0.52, 1)
 theme_override_fonts/font = ExtResource("4_jix8l")
 theme_override_font_sizes/font_size = 26
+theme_override_styles/focus = SubResource("StyleBoxFlat_jix8l")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_jix8l")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_jix8l")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_jix8l")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_jix8l")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_jix8l")
+theme_override_styles/hover = SubResource("StyleBoxFlat_glbon")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_jix8l")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_jix8l")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_jix8l")
 theme_override_styles/normal = SubResource("StyleBoxFlat_jix8l")
 text = "PLAY"
 
