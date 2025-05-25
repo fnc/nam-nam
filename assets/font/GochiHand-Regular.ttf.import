@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://bfctgtn5lyao5"
-path="res://.godot/imported/Buycat.otf-3b61cd40519c80f65743713594d325ab.fontdata"
+uid="uid://ba4wb48gr6auk"
+path="res://.godot/imported/GochiHand-Regular.ttf-4694cc7ee63c22c4287be166e0209308.fontdata"
 
 [deps]
 
-source_file="res://assets/font/Buycat.otf"
-dest_files=["res://.godot/imported/Buycat.otf-3b61cd40519c80f65743713594d325ab.fontdata"]
+source_file="res://assets/font/GochiHand-Regular.ttf"
+dest_files=["res://.godot/imported/GochiHand-Regular.ttf-4694cc7ee63c22c4287be166e0209308.fontdata"]
 
 [params]
 
