@@ -1,8 +1,14 @@
-[gd_scene load_steps=2 format=3 uid="uid://c402oau8vvnxb"]
+[gd_scene load_steps=6 format=3 uid="uid://c402oau8vvnxb"]
 
 [ext_resource type="Script" uid="uid://62frjpncckdu" path="res://src/block.gd" id="1_im0tn"]
+[ext_resource type="Texture2D" uid="uid://d0ynaafj2i63a" path="res://assets/blocks/good_block_a.tres" id="2_e2bb5"]
+[ext_resource type="Texture2D" uid="uid://dh66i4vwpvag8" path="res://assets/blocks/good_block_b.tres" id="3_5npld"]
+[ext_resource type="Texture2D" uid="uid://r2l3thjvlfk0" path="res://assets/blocks/bad_block_a.tres" id="4_cb14l"]
+[ext_resource type="Texture2D" uid="uid://dn8200xku3tsg" path="res://assets/blocks/bad_block_b.tres" id="5_gatpv"]
 
-[node name="Block" type="Node2D"]
+[node name="Block" type="Node2D" node_paths=PackedStringArray("block_sprite")]
 script = ExtResource("1_im0tn")
+block_textures = Array[Texture]([ExtResource("2_e2bb5"), ExtResource("3_5npld"), ExtResource("4_cb14l"), ExtResource("5_gatpv")])
+block_sprite = NodePath("Sprite2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

@@ -1,6 +1,9 @@
 extends Node2D
 enum BlockType { RED, BLUE, GREEN, YELLOW }
 
+@export var block_textures: Array[Texture]
+@export var block_sprite: Sprite2D
+
 var color_type: BlockType
 var grid_pos: Vector2  # This will store the Block's position in the grid
 
@@ -9,12 +12,12 @@ func set_random_type():
 	color_type = BlockType.values().pick_random()
 	match color_type:
 		BlockType.RED:
-			$Sprite2D.texture = preload("res://assets/good_block_a.tres")
+			block_sprite.texture = block_textures[0]
 		BlockType.BLUE:
-			$Sprite2D.texture = preload("res://assets/good_block_b.tres")
+			block_sprite.texture = block_textures[1]
 		BlockType.GREEN:
-			$Sprite2D.texture = preload("res://assets/bad_block_a.tres")
+			block_sprite.texture = block_textures[2]
 		BlockType.YELLOW:
-			$Sprite2D.texture = preload("res://assets/bad_block_b.tres")
+			block_sprite.texture = block_textures[3]
 		_:
-			$Sprite2D.texture = preload("res://assets/bad_block_b.tres")
+			block_sprite.texture = block_textures[3]
