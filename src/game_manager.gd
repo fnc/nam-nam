@@ -36,23 +36,62 @@ func _ready():
 func _process(_delta):
 	if Input.is_action_just_pressed("ui_left"):
 		print("Left key was just pressed")
-		for block in current_blocks:
-			var target_pos = block.grid_pos
-			target_pos.x -= 1
-			move_Block(block.grid_pos,target_pos)
+		if can_move(Vector2(-1, 0)):  # Check boundaries before moving
+			for block in current_blocks:
+				var target_pos = block.grid_pos + Vector2(-1, 0)
+				move_Block(block.grid_pos, target_pos)
+
 	elif Input.is_action_just_pressed("ui_right"):
-		for block in current_blocks:
-			var target_pos = block.grid_pos
-			target_pos.x += 1
-			move_Block(block.grid_pos,target_pos)
 		print("Right key was just pressed")
-	
+		if can_move(Vector2(1, 0)):  # Check boundaries before moving
+			for block in current_blocks:
+				var target_pos = block.grid_pos + Vector2(1, 0)
+				move_Block(block.grid_pos, target_pos)
+
+	elif Input.is_action_just_pressed("ui_up"):  # Handle rotation
+		print("Rotate key was just pressed")
+		if can_rotate():  # Check if rotation is valid
+			rotate_blocks()
+
 	time_elapsed += _delta
 	if time_elapsed >= gravity_interval:
 		apply_gravity()
 		time_elapsed = 0.0  # Reset timer
 		print("Gravity applied!")
 
+func can_move(offset: Vector2) -> bool:
+	for block in current_blocks:
+		var target_pos = block.grid_pos + offset
+		if not is_position_valid(target_pos):
+			return false
+	return true
+
+func can_rotate() -> bool:
+	# Implement logic to check if rotation is possible
+	# Example: Check if all new positions are within bounds
+	var new_positions = get_rotated_positions()
+	for pos in new_positions:
+		if not is_position_valid(pos):
+			return false
+	return true
+
+func get_rotated_positions() -> Array:
+	var rotated_positions = []
+	var pivot = current_blocks[0]  # Assuming the first block is the pivot
+	
+	for block in current_blocks:
+		# Calculate relative position from pivot
+		var relative_pos = block.grid_pos - pivot.grid_pos
+		
+		# Apply 90-degree clockwise rotation formula: (x, y) -> (-y, x)
+		var rotated_pos = Vector2(-relative_pos.y, relative_pos.x)
+		
+		# Compute new absolute position
+		var target_pos = pivot.grid_pos + rotated_pos
+		
+		rotated_positions.append(target_pos)
+
+	return rotated_positions
 
 
 # Function to spawn new Blocks at the top center of the grid
@@ -137,7 +176,7 @@ func find_connected_Blocks(start_pos: Vector2):
 		
 		for dir in [Vector2(1,0), Vector2(-1,0), Vector2(0,1), Vector2(0,-1)]:  # Check adjacent cells
 			var neighbor = pos + dir
-			if is_valid_position(neighbor) and board[neighbor.x][neighbor.y] and board[neighbor.x][neighbor.y].color_type == color:
+			if is_position_valid(neighbor) and board[neighbor.x][neighbor.y] and board[neighbor.x][neighbor.y].color_type == color:
 				stack.append(neighbor)
 	
 	return connected
@@ -149,5 +188,37 @@ func remove_Block(pos: Vector2):
 		board[pos.x][pos.y] = null
 
 # Checks if a position is within bounds
-func is_valid_position(pos: Vector2) -> bool:
-	return pos.x >= 0 and pos.x < grid_size.x and pos.y >= 0 and pos.y < grid_size.y
+func is_position_valid(pos: Vector2) -> bool:
+	return pos.x >= 0 and pos.x < grid_size.x and pos.y >= 0 and pos.y < grid_size.y and not is_occupied(pos)
+	
+func is_occupied(pos: Vector2) -> bool:
+	# Ensure position is within the board bounds
+
+	# Ignore current blocks that are being rotated
+	for block in current_blocks:
+		if block.grid_pos == pos:
+			return false  # Position is part of the rotating group
+
+	# Check if the position is occupied in the board matrix
+	return board[pos.x][pos.y] != null  # Or any value that represents a filled cell
+
+	
+func rotate_blocks():
+	# Choose a pivot block (usually the first in the group)
+	var pivot = current_blocks[0]
+	var new_positions = []
+	
+	for block in current_blocks:
+		var relative_pos = block.grid_pos - pivot.grid_pos
+		var rotated_pos = Vector2(-relative_pos.y, relative_pos.x)  # 90-degree clockwise rotation
+		var target_pos = pivot.grid_pos + rotated_pos
+		
+		if not is_position_valid(target_pos):
+			return  # Prevent rotation if any block is out of bounds
+
+		new_positions.append(target_pos)
+
+	# Apply the new positions after validation
+	for i in range(current_blocks.size()):
+		move_Block(current_blocks[i].grid_pos, new_positions[i])
+		
