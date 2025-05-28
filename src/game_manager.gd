@@ -16,6 +16,8 @@ var Block_scene = preload("res://block.tscn")  # Replace with actual Block scene
 var current_blocks = []
 
 var block_moving = false  # Mutex-like flag
+signal movement_finished
+
 
 
 # Called when the scene loads
@@ -136,8 +138,7 @@ func apply_gravity():
 # Moves a Block from one grid cell to another
 func move_Block(Block: Variant, to_pos: Vector2):
 	if block_moving:
-		return  # Prevent overlapping operations
-
+		await movement_finished  # Wait for previous movement to finish
 	block_moving = true  # Lock movement process
 	if Block:
 		Block.position = grid_manager.get_cell_center(to_pos.x, to_pos.y)
@@ -145,7 +146,7 @@ func move_Block(Block: Variant, to_pos: Vector2):
 		Block.grid_pos = to_pos
 		board[to_pos.x][to_pos.y] = Block
 	block_moving = false  # Unlock after movement
-
+	movement_finished.emit()  # Notify that movement is complete
 
 # Function to check for matches (connected groups of same color). Returns true if matches existed
 func check_for_matches() -> bool:
@@ -183,7 +184,7 @@ func find_connected_Blocks(start_pos: Vector2):
 		
 		for dir in [Vector2(1,0), Vector2(-1,0), Vector2(0,1), Vector2(0,-1)]:  # Check adjacent cells
 			var neighbor = pos + dir
-			if is_position_valid(neighbor) and board[neighbor.x][neighbor.y] and board[neighbor.x][neighbor.y].color_type == color:
+			if is_inside_boundaries(neighbor) and board[neighbor.x][neighbor.y] and board[neighbor.x][neighbor.y].color_type == color:
 				stack.append(neighbor)
 	
 	return connected
@@ -196,8 +197,11 @@ func remove_Block(pos: Vector2):
 
 # Checks if a position is within bounds
 func is_position_valid(pos: Vector2) -> bool:
-	return pos.x >= 0 and pos.x < grid_size.x and pos.y >= 0 and pos.y < grid_size.y and not is_occupied(pos)
+	return is_inside_boundaries(pos) and not is_occupied(pos)
 	
+func is_inside_boundaries(pos: Vector2) -> bool:
+	return pos.x >= 0 and pos.x < grid_size.x and pos.y >= 0 and pos.y < grid_size.y
+
 func is_occupied(pos: Vector2) -> bool:
 	# Ensure position is within the board bounds
 
@@ -214,18 +218,14 @@ func is_occupied(pos: Vector2) -> bool:
 func rotate_blocks():
 	# Choose a pivot block (usually the first in the group)
 	var pivot = current_blocks[0]
-	var new_positions = []
-		
+	var new_positions = []		
 	for block in current_blocks:
 		var relative_pos = block.grid_pos - pivot.grid_pos
 		var rotated_pos = Vector2(-relative_pos.y, relative_pos.x)  # 90-degree clockwise rotation
-		var target_pos = pivot.grid_pos + rotated_pos
-		
+		var target_pos = pivot.grid_pos + rotated_pos		
 		if not is_position_valid(target_pos):
 			return  # Prevent rotation if any block is out of bounds
-
 		new_positions.append(target_pos)
-
 	# Apply the new positions after validation
 	for i in range(current_blocks.size()):
 		move_Block(current_blocks[i], new_positions[i])
