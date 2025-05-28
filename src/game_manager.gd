@@ -15,6 +15,9 @@ var Block_scene = preload("res://block.tscn")  # Replace with actual Block scene
 
 var current_blocks = []
 
+var block_moving = false  # Mutex-like flag
+
+
 # Called when the scene loads
 func _ready():
 	grid_size = grid_manager.get_grid_dimensions()
@@ -34,27 +37,30 @@ func _ready():
 	spawn_Block_pair()
 
 func _process(_delta):
+	var speed_coef = 1
 	if Input.is_action_just_pressed("ui_left"):
 		print("Left key was just pressed")
 		if can_move(Vector2(-1, 0)):  # Check boundaries before moving
 			for block in current_blocks:
 				var target_pos = block.grid_pos + Vector2(-1, 0)
-				move_Block(block.grid_pos, target_pos)
+				move_Block(block, target_pos)
 
 	elif Input.is_action_just_pressed("ui_right"):
 		print("Right key was just pressed")
 		if can_move(Vector2(1, 0)):  # Check boundaries before moving
 			for block in current_blocks:
 				var target_pos = block.grid_pos + Vector2(1, 0)
-				move_Block(block.grid_pos, target_pos)
+				move_Block(block, target_pos)
 
 	elif Input.is_action_just_pressed("ui_up"):  # Handle rotation
 		print("Rotate key was just pressed")
 		if can_rotate():  # Check if rotation is valid
 			rotate_blocks()
+	elif Input.is_action_pressed("ui_down"):
+		speed_coef = 0.05
 
 	time_elapsed += _delta
-	if time_elapsed >= gravity_interval:
+	if time_elapsed >= gravity_interval * speed_coef :
 		apply_gravity()
 		time_elapsed = 0.0  # Reset timer
 		print("Gravity applied!")
@@ -93,7 +99,6 @@ func get_rotated_positions() -> Array:
 
 	return rotated_positions
 
-
 # Function to spawn new Blocks at the top center of the grid
 func spawn_Block_pair():
 	var center_x = int(grid_size.x / 2)
@@ -116,37 +121,39 @@ func spawn_Block_pair():
 func apply_gravity():
 	var block_moved = false
 	var new_pair_needed = false
-	for x in range(int(grid_size.x)):  # Loop through each column
-		for y in range(int(grid_size.y)):  # Start from second-to-last row, moving up
+	for x in range(grid_size.x):  # Loop through each column
+		for y in range(grid_size.y):  # Start from second-to-last row, moving up
 			if board[x][y] != null:  # If Puyo exists here
 				var target_y = y - 1
 				if target_y >= 0 and board[x][target_y] == null:  # Ensure valid row and empty below
-					move_Block(Vector2(x, target_y + 1), Vector2(x, target_y))
+					move_Block(board[x][target_y + 1], Vector2(x, target_y))
 					block_moved = true
 					#target_y += 1  # Keep moving down until blocked
 	if !block_moved:
 		if !check_for_matches():
 			spawn_Block_pair()
 
-
-
 # Moves a Block from one grid cell to another
-func move_Block(from_pos: Vector2, to_pos: Vector2):
-	var Block = board[from_pos.x][from_pos.y]
+func move_Block(Block: Variant, to_pos: Vector2):
+	if block_moving:
+		return  # Prevent overlapping operations
+
+	block_moving = true  # Lock movement process
 	if Block:
 		Block.position = grid_manager.get_cell_center(to_pos.x, to_pos.y)
+		board[Block.grid_pos.x][Block.grid_pos.y] = null
 		Block.grid_pos = to_pos
-		
-		board[from_pos.x][from_pos.y] = null
 		board[to_pos.x][to_pos.y] = Block
+	block_moving = false  # Unlock after movement
+
 
 # Function to check for matches (connected groups of same color). Returns true if matches existed
 func check_for_matches() -> bool:
 	var matches = []
 	var checked_cells = {}
 	
-	for x in range(int(grid_size.x)):
-		for y in range(int(grid_size.y)):
+	for x in range(grid_size.x):
+		for y in range(grid_size.y):
 			if board[x][y] and not checked_cells.has(Vector2(x, y)):
 				var connected = find_connected_Blocks(Vector2(x, y))
 				if connected.size() >= 4:
@@ -204,12 +211,11 @@ func is_occupied(pos: Vector2) -> bool:
 	# Check if the position is occupied in the board matrix
 	return board[pos.x][pos.y] != null  # Or any value that represents a filled cell
 
-	
 func rotate_blocks():
 	# Choose a pivot block (usually the first in the group)
 	var pivot = current_blocks[0]
 	var new_positions = []
-	
+		
 	for block in current_blocks:
 		var relative_pos = block.grid_pos - pivot.grid_pos
 		var rotated_pos = Vector2(-relative_pos.y, relative_pos.x)  # 90-degree clockwise rotation
@@ -222,5 +228,4 @@ func rotate_blocks():
 
 	# Apply the new positions after validation
 	for i in range(current_blocks.size()):
-		move_Block(current_blocks[i].grid_pos, new_positions[i])
-		
+		move_Block(current_blocks[i], new_positions[i])
