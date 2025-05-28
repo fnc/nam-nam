@@ -21,7 +21,7 @@ func get_grid_size() -> Vector2:
 func get_grid_dimensions() -> Vector2:
 	var cell_size = get_cell_size()
 	var grid_size = get_grid_size()
-	return Vector2(grid_size.x / cell_size.x, grid_size.y / cell_size.y)
+	return Vector2(int(grid_size.x / cell_size.x), int(grid_size.y / cell_size.y))
 
 # Function to get the center position of a specific cell
 func get_cell_center(cell_x: int, cell_y: int) -> Vector2:

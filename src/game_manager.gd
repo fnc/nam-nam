@@ -199,6 +199,8 @@ func is_occupied(pos: Vector2) -> bool:
 		if block.grid_pos == pos:
 			return false  # Position is part of the rotating group
 
+	if pos.x < 0 and pos.x >= grid_size.x and pos.y < 0 and pos.y >= grid_size.y:
+		return false
 	# Check if the position is occupied in the board matrix
 	return board[pos.x][pos.y] != null  # Or any value that represents a filled cell
 
