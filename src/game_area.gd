@@ -5,7 +5,7 @@ extends Node2D
 @onready var cell_top_right = $cellToprightLimit
 
 # Preload a texture for the sprites
-var sprite_texture = preload("res://assets/backgroundBlock.png")  # Replace with the actual texture path
+var sprite_texture = preload("res://assets/opcion_3.png")  # Replace with the actual texture path
 
 
 

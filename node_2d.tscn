@@ -1,7 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://bikg20lmcmbxl"]
+[gd_scene load_steps=13 format=3 uid="uid://bikg20lmcmbxl"]
 
 [ext_resource type="Texture2D" uid="uid://dufhii16cqsxg" path="res://assets/Sprites.png" id="1_0e48y"]
+[ext_resource type="Material" uid="uid://b3slm62s5a245" path="res://assets/background_material.tres" id="1_q6r6c"]
 [ext_resource type="Script" uid="uid://d3v2fcihyutup" path="res://src/game_area.gd" id="2_epypp"]
+[ext_resource type="Texture2D" uid="uid://b12emrlwvbjte" path="res://assets/opcion_3.png" id="2_kdubu"]
 [ext_resource type="Script" uid="uid://dhfrqymt8a10o" path="res://src/game_manager.gd" id="3_epypp"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0hol4"]
@@ -67,14 +69,17 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TextureRect" type="ColorRect" parent="Background/Control"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.696, 1, 0.52, 1)
+[node name="TextureRect" type="TextureRect" parent="Background"]
+modulate = Color(0.82, 0.82, 0.82, 1)
+texture_repeat = 2
+material = ExtResource("1_q6r6c")
+offset_left = -1.0
+offset_top = -1.0
+offset_right = 6183.0
+offset_bottom = 2984.0
+scale = Vector2(0.0973454, 0.268999)
+texture = ExtResource("2_kdubu")
+stretch_mode = 1
 
 [node name="ham" type="AnimatedSprite2D" parent="."]
 position = Vector2(501, 651)
