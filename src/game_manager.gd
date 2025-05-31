@@ -1,9 +1,7 @@
 extends Node
 
 # Grid reference
-@onready var grid_manager = $"gameArea"
-
-@export var game_over_scene: PackedScene
+@onready var grid_manager = $gameArea
 
 #gravity
 var time_elapsed = 0.0
@@ -14,6 +12,7 @@ var grid_size: Vector2
 var cell_size: Vector2
 var board = []  # Stores cell occupancy (2D array)
 var Block_scene = preload("res://block.tscn")  # Replace with actual Block scene
+var game_over_scene = preload("res://gameOver.tscn")  # Replace with actual Block scene
 
 var current_blocks = []
 
@@ -24,9 +23,9 @@ var score = 0
 
 func update_score(amount):
 	score += amount  # Increase score
+	if score < 0:
+		game_over()
 	$ScoreLabel.text = str(score)  # Update UI text
-
-
 
 # Called when the scene loads
 func _ready():
@@ -45,6 +44,9 @@ func _ready():
 	update_score(0)
 	# Spawn first piece
 	spawn_Block_pair()
+
+func game_over():
+	get_tree().change_scene_to_packed(game_over_scene)
 
 func _process(_delta):
 	var speed_coef = 1
@@ -109,8 +111,7 @@ func get_rotated_positions() -> Array:
 
 	return rotated_positions
 
-func game_over():
-	get_tree().change_scene_to_packed(game_over_scene)
+
 
 
 # Function to spawn new Blocks at the top center of the grid
@@ -147,7 +148,6 @@ func apply_gravity():
 					#target_y += 1  # Keep moving down until blocked
 	if !block_moved:
 		if !check_for_matches():
-			
 			spawn_Block_pair()
 
 # Moves a Block from one grid cell to another
@@ -165,25 +165,31 @@ func move_Block(Block: Variant, to_pos: Vector2):
 
 # Function to check for matches (connected groups of same color). Returns true if matches existed
 func check_for_matches() -> bool:
-	var matches = []
+	var matches = {}
 	var checked_cells = {}
+	var bonus = 0
 	
 	for x in range(grid_size.x):
 		for y in range(grid_size.y):
 			if board[x][y] and not checked_cells.has(Vector2(x, y)):
 				var connected = find_connected_Blocks(Vector2(x, y))
 				if connected.size() >= 4:
-					matches.append_array(connected)
+					matches = append_array_to_set(matches, connected)
 	
 	# Remove matched Blocks
 	for pos in matches:
 		remove_Block(pos)
-		update_score(100)
 		#apply_gravity()
 	
 	if matches.size() > 0:
+		update_score( 2 * matches.size() + bonus)
 		return true
 	return false
+
+func append_array_to_set(original_set: Dictionary, arr: Array) -> Dictionary:
+	for item in arr:
+		original_set[item] = true  # Adds items as unique dictionary keys
+	return original_set  # Returns an array of unique values
 
 # Finds all connected Blocks of the same color
 func find_connected_Blocks(start_pos: Vector2):
