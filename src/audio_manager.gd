@@ -6,6 +6,9 @@ extends Node
 @export var positive_reaction: AudioStreamPlayer
 @export var negative_reaction: AudioStreamPlayer
 @export var nice_combo: AudioStreamPlayer
+@export var click: AudioStreamPlayer
+@export var interactions: AudioStreamPlayer
+@export var poof: AudioStreamPlayer
 
 #MX
 @export_group("Music")
