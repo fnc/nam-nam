@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://y5preepa7g7x"]
+[gd_scene load_steps=25 format=3 uid="uid://y5preepa7g7x"]
 
 [ext_resource type="Script" uid="uid://cblq28kj8q23w" path="res://src/audio_manager.gd" id="1_jisk1"]
 [ext_resource type="AudioStream" uid="uid://bccd3etr3h7jy" path="res://assets/audio/eat/eat_voice-001.wav" id="2_l55mp"]
@@ -18,6 +18,7 @@
 [ext_resource type="AudioStream" uid="uid://cb3ggn3g7oa15" path="res://assets/audio/reactions/NegativeReaction-004.wav" id="16_o2ba0"]
 [ext_resource type="AudioStream" uid="uid://fa7ikwp2pivt" path="res://assets/audio/reactions/NegativeReaction-005.wav" id="17_e4pva"]
 [ext_resource type="AudioStream" uid="uid://ckgf4vaqrp3g0" path="res://assets/audio/reactions/NegativeReaction-006.wav" id="18_hbb3y"]
+[ext_resource type="AudioStream" uid="uid://ns4fdpomgq4g" path="res://assets/audio/bgmx.ogg" id="19_hokuy"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_k4pvn"]
 random_pitch = 1.1
@@ -93,3 +94,6 @@ bus = &"SFX"
 [node name="Mx" type="Node" parent="."]
 
 [node name="BgMusic" type="AudioStreamPlayer" parent="Mx"]
+stream = ExtResource("19_hokuy")
+volume_db = -18.0
+autoplay = true
