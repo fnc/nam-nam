@@ -97,3 +97,4 @@ bus = &"SFX"
 stream = ExtResource("19_hokuy")
 volume_db = -18.0
 autoplay = true
+bus = &"MX"
