@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://c6t2e3iex3esh"]
 
 [ext_resource type="Script" uid="uid://cbnyc51i5hhri" path="res://src/main_menu.gd" id="1_06t4h"]
-[ext_resource type="PackedScene" uid="uid://bikg20lmcmbxl" path="res://node_2d.tscn" id="2_7vrkn"]
+[ext_resource type="PackedScene" uid="uid://bikg20lmcmbxl" path="res://game.tscn" id="2_7vrkn"]
 [ext_resource type="Texture2D" uid="uid://cu8avonayx1jw" path="res://assets/Portada sin botones.png" id="3_fu7sn"]
 [ext_resource type="FontFile" uid="uid://ba4wb48gr6auk" path="res://assets/font/GochiHand-Regular.ttf" id="4_jix8l"]
 

@@ -7,8 +7,6 @@ extends Node2D
 # Preload a texture for the sprites
 var sprite_texture = preload("res://assets/opcion_3.png")  # Replace with the actual texture path
 
-
-
 # Function to get the size of a single cell
 func get_cell_size() -> Vector2:
 	return cell_top_right.position - bottom_left.position

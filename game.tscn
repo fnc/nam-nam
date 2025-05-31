@@ -1,10 +1,11 @@
-[gd_scene load_steps=13 format=3 uid="uid://bikg20lmcmbxl"]
+[gd_scene load_steps=15 format=3 uid="uid://bikg20lmcmbxl"]
 
 [ext_resource type="Texture2D" uid="uid://dufhii16cqsxg" path="res://assets/Sprites.png" id="1_0e48y"]
-[ext_resource type="Material" uid="uid://b3slm62s5a245" path="res://assets/background_material.tres" id="1_q6r6c"]
 [ext_resource type="Script" uid="uid://d3v2fcihyutup" path="res://src/game_area.gd" id="2_epypp"]
-[ext_resource type="Texture2D" uid="uid://b12emrlwvbjte" path="res://assets/opcion_3.png" id="2_kdubu"]
+[ext_resource type="Texture2D" uid="uid://dhnmcc1cfk7fg" path="res://assets/game_background.png" id="2_q6r6c"]
 [ext_resource type="Script" uid="uid://dhfrqymt8a10o" path="res://src/game_manager.gd" id="3_epypp"]
+[ext_resource type="PackedScene" uid="uid://y2eblquwtwib" path="res://gameOver.tscn" id="5_q6r6c"]
+[ext_resource type="FontFile" uid="uid://ba4wb48gr6auk" path="res://assets/font/GochiHand-Regular.ttf" id="6_ryrav"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0hol4"]
 atlas = ExtResource("1_0e48y")
@@ -56,7 +57,18 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="LabelSettings" id="LabelSettings_eow3j"]
+font = ExtResource("6_ryrav")
+font_size = 54
+outline_size = 10
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 22
+shadow_color = Color(0, 0, 0, 0.329412)
+shadow_offset = Vector2(0.51, 1)
+
 [node name="root" type="Node2D"]
+script = ExtResource("3_epypp")
+game_over_scene = ExtResource("5_q6r6c")
 
 [node name="Background" type="CanvasLayer" parent="."]
 layer = -1
@@ -68,39 +80,41 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+metadata/_edit_use_anchors_ = true
 
 [node name="TextureRect" type="TextureRect" parent="Background"]
-modulate = Color(0.82, 0.82, 0.82, 1)
-texture_repeat = 2
-material = ExtResource("1_q6r6c")
-offset_left = -1.0
-offset_top = -1.0
-offset_right = 6183.0
-offset_bottom = 2984.0
-scale = Vector2(0.0973454, 0.268999)
-texture = ExtResource("2_kdubu")
-stretch_mode = 1
+offset_right = 1280.0
+offset_bottom = 720.0
+texture = ExtResource("2_q6r6c")
+expand_mode = 1
 
 [node name="ham" type="AnimatedSprite2D" parent="."]
-position = Vector2(501, 651)
-scale = Vector2(0.753521, 0.753521)
+position = Vector2(1001, 302)
+scale = Vector2(0.937206, 0.937206)
 sprite_frames = SubResource("SpriteFrames_ir8iy")
 
 [node name="gameArea" type="Node2D" parent="."]
 script = ExtResource("2_epypp")
 
 [node name="topRightLimit" type="Marker2D" parent="gameArea"]
-position = Vector2(432, 76)
+position = Vector2(558, 69)
 gizmo_extents = 316.3
 
 [node name="bottomLeftLimit" type="Marker2D" parent="gameArea"]
-position = Vector2(46, 756)
+position = Vector2(167, 629)
 gizmo_extents = 316.3
 
 [node name="cellToprightLimit" type="Marker2D" parent="gameArea"]
-position = Vector2(105, 692)
+position = Vector2(230, 560)
 gizmo_extents = 316.3
 
-[node name="GameManager" type="Node" parent="."]
-script = ExtResource("3_epypp")
-gravity_interval = 1.0
+[node name="ScoreLabel" type="Label" parent="."]
+offset_left = 837.0
+offset_top = 516.0
+offset_right = 1051.0
+offset_bottom = 581.0
+scale = Vector2(1.12904, 1.45205)
+text = "0"
+label_settings = SubResource("LabelSettings_eow3j")
+horizontal_alignment = 2
+vertical_alignment = 1

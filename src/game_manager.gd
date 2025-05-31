@@ -1,7 +1,9 @@
 extends Node
 
 # Grid reference
-@onready var grid_manager = $"../gameArea"
+@onready var grid_manager = $"gameArea"
+
+@export var game_over_scene: PackedScene
 
 #gravity
 var time_elapsed = 0.0
@@ -18,6 +20,12 @@ var current_blocks = []
 var block_moving = false  # Mutex-like flag
 signal movement_finished
 
+var score = 0
+
+func update_score(amount):
+	score += amount  # Increase score
+	$ScoreLabel.text = str(score)  # Update UI text
+
 
 
 # Called when the scene loads
@@ -33,8 +41,8 @@ func _ready():
 		board[x].fill(null)  # Empty cells
 	
 	#background sprites
-	grid_manager.spawn_sprites()
-	
+	#grid_manager.spawn_sprites()
+	update_score(0)
 	# Spawn first piece
 	spawn_Block_pair()
 
@@ -101,12 +109,18 @@ func get_rotated_positions() -> Array:
 
 	return rotated_positions
 
+func game_over():
+	get_tree().change_scene_to_packed(game_over_scene)
+
+
 # Function to spawn new Blocks at the top center of the grid
 func spawn_Block_pair():
 	var center_x = int(grid_size.x / 2)
 	var start_positions = [Vector2(center_x, int(grid_size.y)-1), Vector2(center_x, int(grid_size.y) - 2)]  # Two Blocks
 	current_blocks.clear()
 	for pos in start_positions:
+		if is_occupied(pos):
+			game_over()
 		var Block = Block_scene.instantiate()
 		Block.position = grid_manager.get_cell_center(pos.x, pos.y)
 		Block.grid_pos = pos
@@ -133,6 +147,7 @@ func apply_gravity():
 					#target_y += 1  # Keep moving down until blocked
 	if !block_moved:
 		if !check_for_matches():
+			
 			spawn_Block_pair()
 
 # Moves a Block from one grid cell to another
@@ -163,6 +178,7 @@ func check_for_matches() -> bool:
 	# Remove matched Blocks
 	for pos in matches:
 		remove_Block(pos)
+		update_score(100)
 		#apply_gravity()
 	
 	if matches.size() > 0:
