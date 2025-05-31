@@ -1,10 +1,10 @@
 [gd_scene load_steps=6 format=3 uid="uid://c402oau8vvnxb"]
 
 [ext_resource type="Script" uid="uid://62frjpncckdu" path="res://src/block.gd" id="1_im0tn"]
-[ext_resource type="Texture2D" uid="uid://d0ynaafj2i63a" path="res://assets/blocks/good_block_a.tres" id="2_e2bb5"]
-[ext_resource type="Texture2D" uid="uid://dh66i4vwpvag8" path="res://assets/blocks/good_block_b.tres" id="3_5npld"]
-[ext_resource type="Texture2D" uid="uid://r2l3thjvlfk0" path="res://assets/blocks/bad_block_a.tres" id="4_cb14l"]
-[ext_resource type="Texture2D" uid="uid://dn8200xku3tsg" path="res://assets/blocks/bad_block_b.tres" id="5_gatpv"]
+[ext_resource type="Texture2D" uid="uid://lufm31injq6k" path="res://assets/Semilla pelada.png" id="2_e2bb5"]
+[ext_resource type="Texture2D" uid="uid://epyuocg7e15x" path="res://assets/acelga.png" id="3_5npld"]
+[ext_resource type="Texture2D" uid="uid://bug31hf5io2fi" path="res://assets/chocolate.png" id="4_cb14l"]
+[ext_resource type="Texture2D" uid="uid://fjrv728n0j4s" path="res://assets/caramelo frutilla.png" id="5_gatpv"]
 
 [node name="Block" type="Node2D" node_paths=PackedStringArray("block_sprite")]
 script = ExtResource("1_im0tn")
