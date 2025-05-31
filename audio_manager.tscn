@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://y5preepa7g7x"]
+[gd_scene load_steps=38 format=3 uid="uid://y5preepa7g7x"]
 
 [ext_resource type="Script" uid="uid://cblq28kj8q23w" path="res://src/audio_manager.gd" id="1_jisk1"]
 [ext_resource type="AudioStream" uid="uid://bccd3etr3h7jy" path="res://assets/audio/eat/eat_voice-001.wav" id="2_l55mp"]
@@ -18,7 +18,17 @@
 [ext_resource type="AudioStream" uid="uid://cb3ggn3g7oa15" path="res://assets/audio/reactions/NegativeReaction-004.wav" id="16_o2ba0"]
 [ext_resource type="AudioStream" uid="uid://fa7ikwp2pivt" path="res://assets/audio/reactions/NegativeReaction-005.wav" id="17_e4pva"]
 [ext_resource type="AudioStream" uid="uid://ckgf4vaqrp3g0" path="res://assets/audio/reactions/NegativeReaction-006.wav" id="18_hbb3y"]
+[ext_resource type="AudioStream" uid="uid://deppk3bvfge0c" path="res://assets/audio/Others/boton-click.wav" id="19_hbb3y"]
 [ext_resource type="AudioStream" uid="uid://ns4fdpomgq4g" path="res://assets/audio/bgmx.ogg" id="19_hokuy"]
+[ext_resource type="AudioStream" uid="uid://bofaye2ay6me5" path="res://assets/audio/Others/nicecombo.ogg" id="19_wxfw7"]
+[ext_resource type="AudioStream" uid="uid://bdxulldhjkxdy" path="res://assets/audio/Others/InteractionsAndClicks-001.ogg" id="20_wxfw7"]
+[ext_resource type="AudioStream" uid="uid://cowwhbqyas3i4" path="res://assets/audio/Others/InteractionsAndClicks-002.ogg" id="21_7l730"]
+[ext_resource type="AudioStream" uid="uid://yoxeuifs282m" path="res://assets/audio/Others/InteractionsAndClicks-003.ogg" id="22_nkxx2"]
+[ext_resource type="AudioStream" uid="uid://d20hbwivf04cd" path="res://assets/audio/Others/InteractionsAndClicks-004.ogg" id="23_8bpql"]
+[ext_resource type="AudioStream" uid="uid://ll3t2sq70sn" path="res://assets/audio/Others/poof-001.wav" id="24_rginq"]
+[ext_resource type="AudioStream" uid="uid://dpfuxp8dl7jxi" path="res://assets/audio/Others/poof-002.wav" id="25_hkn0n"]
+[ext_resource type="AudioStream" uid="uid://4ygapgoe0sdu" path="res://assets/audio/Others/poof-003.wav" id="26_2qp5w"]
+[ext_resource type="AudioStream" uid="uid://ttdwrafs2tgr" path="res://assets/audio/Others/poof-004.wav" id="27_8o77j"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_k4pvn"]
 random_pitch = 1.1
@@ -63,6 +73,26 @@ stream_3/stream = ExtResource("16_o2ba0")
 stream_4/stream = ExtResource("17_e4pva")
 stream_5/stream = ExtResource("18_hbb3y")
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_jklj1"]
+random_pitch = 2.0
+random_volume_offset_db = 1.0
+streams_count = 1
+stream_0/stream = ExtResource("19_hbb3y")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_pil3g"]
+streams_count = 4
+stream_0/stream = ExtResource("20_wxfw7")
+stream_1/stream = ExtResource("21_7l730")
+stream_2/stream = ExtResource("22_nkxx2")
+stream_3/stream = ExtResource("23_8bpql")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_evv53"]
+streams_count = 4
+stream_0/stream = ExtResource("24_rginq")
+stream_1/stream = ExtResource("25_hkn0n")
+stream_2/stream = ExtResource("26_2qp5w")
+stream_3/stream = ExtResource("27_8o77j")
+
 [node name="AudioManager" type="Node" node_paths=PackedStringArray("eat", "positive_reaction", "negative_reaction", "nice_combo", "bg_music")]
 script = ExtResource("1_jisk1")
 eat = NodePath("Sfx/Eat")
@@ -88,8 +118,22 @@ volume_db = -11.854
 bus = &"SFX"
 
 [node name="NiceCombo" type="AudioStreamPlayer" parent="Sfx"]
+stream = ExtResource("19_wxfw7")
+volume_db = -8.18
+bus = &"SFX"
+playback_type = 1
 
-[node name="BadCombo" type="AudioStreamPlayer" parent="Sfx"]
+[node name="click" type="AudioStreamPlayer" parent="Sfx"]
+stream = SubResource("AudioStreamRandomizer_jklj1")
+volume_db = -5.18
+
+[node name="interactions" type="AudioStreamPlayer" parent="Sfx"]
+stream = SubResource("AudioStreamRandomizer_pil3g")
+volume_db = -9.0
+
+[node name="poof" type="AudioStreamPlayer" parent="Sfx"]
+stream = SubResource("AudioStreamRandomizer_evv53")
+volume_db = -8.349
 
 [node name="Mx" type="Node" parent="."]
 
@@ -98,3 +142,4 @@ stream = ExtResource("19_hokuy")
 volume_db = -18.0
 autoplay = true
 bus = &"MX"
+playback_type = 1
