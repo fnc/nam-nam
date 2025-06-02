@@ -9,4 +9,5 @@ func _ready():
 
 
 func _on_button_pressed() -> void:
+	AudioManager.positive_reaction.play()
 	get_tree().change_scene_to_packed(creditos_scene)

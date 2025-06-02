@@ -46,6 +46,7 @@ func _ready():
 	spawn_Block_pair()
 
 func game_over():
+	AudioManager.negative_reaction.play()
 	var tree = get_tree()
 	if tree:
 		Global.score = score  # Guarda el puntaje actual
@@ -57,6 +58,7 @@ func _process(_delta):
 	if Input.is_action_just_pressed("ui_left"):
 		print("Left key was just pressed")
 		if can_move(Vector2(-1, 0)):  # Check boundaries before moving
+			AudioManager.change_pos.play()
 			for block in current_blocks:
 				var target_pos = block.grid_pos + Vector2(-1, 0)
 				move_Block(block, target_pos)
@@ -64,6 +66,7 @@ func _process(_delta):
 	elif Input.is_action_just_pressed("ui_right"):
 		print("Right key was just pressed")
 		if can_move(Vector2(1, 0)):  # Check boundaries before moving
+			AudioManager.change_pos.play()
 			for block in current_blocks:
 				var target_pos = block.grid_pos + Vector2(1, 0)
 				move_Block(block, target_pos)
@@ -71,15 +74,18 @@ func _process(_delta):
 	elif Input.is_action_just_pressed("ui_up"):  # Handle rotation
 		print("Rotate key was just pressed")
 		if can_rotate():  # Check if rotation is valid
+			AudioManager.change_pos.play()
 			rotate_blocks()
 	elif Input.is_action_pressed("ui_down"):
+		AudioManager.fast_fall.play()
 		speed_coef = 0.05
 
 	time_elapsed += _delta
 	if time_elapsed >= gravity_interval * speed_coef :
 		apply_gravity()
 		time_elapsed = 0.0  # Reset timer
-		print("Gravity applied!")
+		print_debug("Gravity applied!")
+		AudioManager.fall.play()
 
 func can_move(offset: Vector2) -> bool:
 	for block in current_blocks:
@@ -187,6 +193,7 @@ func check_for_matches() -> bool:
 	
 	if matches.size() > 0:
 		update_score( 2 * matches.size() + bonus)
+		AudioManager.eat.play() # Play eating SFX
 		return true
 	return false
 
