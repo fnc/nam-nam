@@ -1,0 +1,67 @@
+[gd_scene load_steps=11 format=3 uid="uid://b0a5a24wbreci"]
+
+[ext_resource type="Texture2D" uid="uid://6yme06b4js0" path="res://assets/image.png" id="1_7q5il"]
+[ext_resource type="Script" uid="uid://dwbqnf015m6xo" path="res://game_over_1.gd" id="1_ml0s2"]
+[ext_resource type="FontFile" uid="uid://ba4wb48gr6auk" path="res://assets/font/GochiHand-Regular.ttf" id="2_7hve2"]
+[ext_resource type="Texture2D" uid="uid://dbrs4wnttq7ue" path="res://assets/boton_creditos.png" id="4_svb07"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ml0s2"]
+font = ExtResource("2_7hve2")
+font_size = 150
+font_color = Color(0.0673875, 0.00917676, 0.0105305, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_svb07"]
+texture = ExtResource("4_svb07")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_e2ra0"]
+texture = ExtResource("4_svb07")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_v171o"]
+texture = ExtResource("4_svb07")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_rseo2"]
+texture = ExtResource("4_svb07")
+
+[sub_resource type="LabelSettings" id="LabelSettings_svb07"]
+font = ExtResource("2_7hve2")
+font_size = 100
+font_color = Color(0.0253638, 0.0253638, 0.0253638, 1)
+
+[node name="GameOver1" type="Node2D"]
+script = ExtResource("1_ml0s2")
+
+[node name="Fondo" type="Sprite2D" parent="."]
+position = Vector2(646, 341)
+scale = Vector2(0.685417, 0.688889)
+texture = ExtResource("1_7q5il")
+
+[node name="Label" type="Label" parent="."]
+offset_left = 506.0
+offset_top = 151.0
+offset_right = 746.0
+offset_bottom = 510.0
+text = "p
+"
+label_settings = SubResource("LabelSettings_ml0s2")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="."]
+offset_left = 934.0
+offset_top = 475.0
+offset_right = 1219.0
+offset_bottom = 676.0
+theme_override_styles/hover = SubResource("StyleBoxTexture_svb07")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_e2ra0")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxTexture_v171o")
+theme_override_styles/normal = SubResource("StyleBoxTexture_rseo2")
+
+[node name="puntaje" type="Label" parent="."]
+offset_left = 497.0
+offset_top = 369.0
+offset_right = 888.0
+offset_bottom = 488.0
+text = "SCORE"
+label_settings = SubResource("LabelSettings_svb07")
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

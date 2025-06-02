@@ -1,45 +1,43 @@
-[gd_scene load_steps=8 format=3 uid="uid://c6t2e3iex3esh"]
+[gd_scene load_steps=9 format=3 uid="uid://c6t2e3iex3esh"]
 
 [ext_resource type="Script" uid="uid://cbnyc51i5hhri" path="res://src/main_menu.gd" id="1_06t4h"]
 [ext_resource type="PackedScene" uid="uid://bikg20lmcmbxl" path="res://game.tscn" id="2_7vrkn"]
-[ext_resource type="Texture2D" uid="uid://cu8avonayx1jw" path="res://assets/Portada sin botones.png" id="3_fu7sn"]
-[ext_resource type="FontFile" uid="uid://ba4wb48gr6auk" path="res://assets/font/GochiHand-Regular.ttf" id="4_jix8l"]
+[ext_resource type="Texture2D" uid="uid://c2e86qpawgfwj" path="res://assets/pantalla_de_inicio2.png" id="3_jix8l"]
+[ext_resource type="Texture2D" uid="uid://djyhqatbr3378" path="res://assets/boton_play.png" id="4_glbon"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_glbon"]
-font = ExtResource("4_jix8l")
-font_size = 41
-outline_color = Color(0.255177, 0.37, 0.1887, 1)
-shadow_size = 16
-shadow_color = Color(0.11, 0.11, 0.11, 0.815686)
-shadow_offset = Vector2(-3.895, 6.675)
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nlkkf"]
+texture = ExtResource("4_glbon")
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jix8l"]
-bg_color = Color(0.13, 0.13, 0.13, 1)
-corner_radius_top_left = 30
-corner_radius_top_right = 30
-corner_radius_bottom_right = 30
-corner_radius_bottom_left = 30
-expand_margin_top = 4.0
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qe12f"]
+texture = ExtResource("4_glbon")
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_glbon"]
-bg_color = Color(0.255177, 0.37, 0.1887, 1)
-corner_radius_top_left = 30
-corner_radius_top_right = 30
-corner_radius_bottom_right = 30
-corner_radius_bottom_left = 30
-expand_margin_top = 4.0
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8qtwp"]
+texture = ExtResource("4_glbon")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_dy7ct"]
+texture = ExtResource("4_glbon")
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 2.0
+offset_top = -1.0
+offset_right = 2.0
+offset_bottom = -1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_06t4h")
 scene_on_play = ExtResource("2_7vrkn")
 
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(635, 390.5)
+scale = Vector2(0.669792, 0.713889)
+texture = ExtResource("3_jix8l")
+
 [node name="TextureRect" type="TextureRect" parent="."]
+visible = false
 layout_mode = 2
 offset_left = 417.3
 offset_top = 400.0
@@ -48,52 +46,19 @@ offset_bottom = 400.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.445, 0.445)
-texture = ExtResource("3_fu7sn")
-expand_mode = 5
+texture = ExtResource("3_jix8l")
+expand_mode = 1
 stretch_mode = 3
 
-[node name="Control" type="Control" parent="."]
-layout_mode = 1
-anchors_preset = 9
-anchor_bottom = 1.0
-offset_top = 190.0
-offset_right = 289.0
-grow_vertical = 2
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 812.0
+offset_top = 531.0
+offset_right = 1136.0
+offset_bottom = 717.0
+theme_override_styles/hover = SubResource("StyleBoxTexture_nlkkf")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxTexture_qe12f")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_8qtwp")
+theme_override_styles/normal = SubResource("StyleBoxTexture_dy7ct")
 
-[node name="CenterContainer" type="CenterContainer" parent="Control"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 1.0
-offset_right = -18.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/CenterContainer"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="Control/CenterContainer/VBoxContainer"]
-layout_mode = 2
-text = "ÑAM-ÑAM"
-label_settings = SubResource("LabelSettings_glbon")
-
-[node name="Button" type="Button" parent="Control/CenterContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.696, 1, 0.52, 1)
-theme_override_fonts/font = ExtResource("4_jix8l")
-theme_override_font_sizes/font_size = 26
-theme_override_styles/focus = SubResource("StyleBoxFlat_jix8l")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_jix8l")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_jix8l")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_jix8l")
-theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_jix8l")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_jix8l")
-theme_override_styles/hover = SubResource("StyleBoxFlat_glbon")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_jix8l")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_jix8l")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_jix8l")
-theme_override_styles/normal = SubResource("StyleBoxFlat_jix8l")
-text = "PLAY"
-
-[connection signal="pressed" from="Control/CenterContainer/VBoxContainer/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

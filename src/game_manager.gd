@@ -46,7 +46,11 @@ func _ready():
 	spawn_Block_pair()
 
 func game_over():
-	get_tree().change_scene_to_packed(game_over_scene)
+	var tree = get_tree()
+	if tree:
+		Global.score = score  # Guarda el puntaje actual
+		var game_over1_scene = preload("res://game_over_1.tscn")
+		get_tree().change_scene_to_packed(game_over1_scene)
 
 func _process(_delta):
 	var speed_coef = 1
@@ -232,7 +236,7 @@ func is_occupied(pos: Vector2) -> bool:
 		if block.grid_pos == pos:
 			return false  # Position is part of the rotating group
 
-	if pos.x < 0 and pos.x >= grid_size.x and pos.y < 0 and pos.y >= grid_size.y:
+	if pos.x < 0 or pos.x >= grid_size.x or pos.y < 0 or pos.y >= grid_size.y:
 		return false
 	# Check if the position is occupied in the board matrix
 	return board[pos.x][pos.y] != null  # Or any value that represents a filled cell

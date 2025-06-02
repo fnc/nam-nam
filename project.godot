@@ -22,6 +22,7 @@ general/default_playback_type=1
 [autoload]
 
 AudioManager="*res://audio_manager.tscn"
+Global="*res://Global.gd"
 
 [display]
 
