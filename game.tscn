@@ -1,8 +1,9 @@
-[gd_scene load_steps=14 format=3 uid="uid://bikg20lmcmbxl"]
+[gd_scene load_steps=15 format=3 uid="uid://bikg20lmcmbxl"]
 
 [ext_resource type="Texture2D" uid="uid://dufhii16cqsxg" path="res://assets/Sprites.png" id="1_0e48y"]
 [ext_resource type="Script" uid="uid://d3v2fcihyutup" path="res://src/game_area.gd" id="2_epypp"]
 [ext_resource type="Texture2D" uid="uid://dhnmcc1cfk7fg" path="res://assets/game_background.png" id="2_q6r6c"]
+[ext_resource type="PackedScene" uid="uid://c402oau8vvnxb" path="res://block.tscn" id="2_ryrav"]
 [ext_resource type="Script" uid="uid://dhfrqymt8a10o" path="res://src/game_manager.gd" id="3_epypp"]
 [ext_resource type="FontFile" uid="uid://ba4wb48gr6auk" path="res://assets/font/GochiHand-Regular.ttf" id="6_ryrav"]
 
@@ -65,9 +66,16 @@ shadow_size = 22
 shadow_color = Color(0, 0, 0, 0.329412)
 shadow_offset = Vector2(0.51, 1)
 
-[node name="game" type="Node2D"]
+[node name="game" type="Node2D" node_paths=PackedStringArray("ref_grid_manager", "ref_next_block_pos")]
 script = ExtResource("3_epypp")
+ref_grid_manager = NodePath("GridManager")
+ref_block_scene = ExtResource("2_ryrav")
+ref_next_block_pos = NodePath("NextBlock")
 gravity_interval = 0.522
+
+[node name="NextBlock" type="Marker2D" parent="."]
+position = Vector2(374, 142)
+gizmo_extents = 61.6
 
 [node name="Background" type="CanvasLayer" parent="."]
 layer = -1
@@ -92,18 +100,18 @@ position = Vector2(1001, 302)
 scale = Vector2(0.937206, 0.937206)
 sprite_frames = SubResource("SpriteFrames_ir8iy")
 
-[node name="gameArea" type="Node2D" parent="."]
+[node name="GridManager" type="Node2D" parent="."]
 script = ExtResource("2_epypp")
 
-[node name="topRightLimit" type="Marker2D" parent="gameArea"]
+[node name="topRightLimit" type="Marker2D" parent="GridManager"]
 position = Vector2(558, 69)
 gizmo_extents = 316.3
 
-[node name="bottomLeftLimit" type="Marker2D" parent="gameArea"]
+[node name="bottomLeftLimit" type="Marker2D" parent="GridManager"]
 position = Vector2(167, 629)
 gizmo_extents = 316.3
 
-[node name="cellToprightLimit" type="Marker2D" parent="gameArea"]
+[node name="cellToprightLimit" type="Marker2D" parent="GridManager"]
 position = Vector2(230, 560)
 gizmo_extents = 316.3
 

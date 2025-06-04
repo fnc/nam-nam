@@ -159,6 +159,5 @@ pitch_scale = 1.88
 stream = ExtResource("19_hokuy")
 volume_db = -18.0
 autoplay = true
-stream_paused = true
 bus = &"MX"
 playback_type = 1

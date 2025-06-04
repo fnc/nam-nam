@@ -1,4 +1,4 @@
-extends Node2D
+class_name BlockPair extends Node2D
 enum BlockType { RED, BLUE, GREEN, YELLOW }
 
 @export var block_textures: Array[Texture]

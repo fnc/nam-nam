@@ -1,7 +1,10 @@
 extends Node
 
 # Grid reference
-@onready var grid_manager = $gameArea
+@export_group("References", "ref")
+@export var ref_grid_manager = Node2D
+@export var ref_block_scene: PackedScene  # Replace with actual Block scene
+@export var ref_next_block_pos: Marker2D # Reference position about where to show what is the next block
 
 #gravity
 var time_elapsed = 0.0
@@ -11,7 +14,6 @@ var time_elapsed = 0.0
 var grid_size: Vector2
 var cell_size: Vector2
 var board = []  # Stores cell occupancy (2D array)
-var Block_scene = preload("res://block.tscn")  # Replace with actual Block scene
 var game_over_scene = preload("res://gameOver.tscn")  # Replace with actual Block scene
 
 var current_blocks = []
@@ -29,8 +31,8 @@ func update_score(amount):
 
 # Called when the scene loads
 func _ready():
-	grid_size = grid_manager.get_grid_dimensions()
-	cell_size = grid_manager.get_cell_size()
+	grid_size = ref_grid_manager.get_grid_dimensions()
+	cell_size = ref_grid_manager.get_cell_size()
 	
 	# Initialize empty board
 	board.resize(int(grid_size.x))
@@ -40,7 +42,7 @@ func _ready():
 		board[x].fill(null)  # Empty cells
 	
 	#background sprites
-	#grid_manager.spawn_sprites()
+	#ref_grid_manager.spawn_sprites()
 	update_score(0)
 	# Spawn first piece
 	spawn_Block_pair()
@@ -84,7 +86,7 @@ func _process(_delta):
 	if time_elapsed >= gravity_interval * speed_coef :
 		apply_gravity()
 		time_elapsed = 0.0  # Reset timer
-		print_debug("Gravity applied!")
+		#print_debug("Gravity applied!")
 		AudioManager.fall.play()
 
 func can_move(offset: Vector2) -> bool:
@@ -122,8 +124,6 @@ func get_rotated_positions() -> Array:
 	return rotated_positions
 
 
-
-
 # Function to spawn new Blocks at the top center of the grid
 func spawn_Block_pair():
 	var center_x = int(grid_size.x / 2)
@@ -132,19 +132,31 @@ func spawn_Block_pair():
 	for pos in start_positions:
 		if is_occupied(pos):
 			game_over()
-		var Block = Block_scene.instantiate()
-		Block.position = grid_manager.get_cell_center(pos.x, pos.y)
-		Block.grid_pos = pos
-		Block.set_random_type()
-		
-		# Scale Block to fit the cell size
-		var texture_size = Block.get_node("Sprite2D").texture.get_size()
-		Block.scale = Vector2(- cell_size.x / texture_size.x,- cell_size.y / texture_size.y)
-		
-		current_blocks.append(Block)
-		add_child(Block)
-		board[pos.x][pos.y] = Block  # Mark the grid as occupied
+		var block = create_block_pair()
+		block.position = ref_grid_manager.get_cell_center(pos.x, pos.y)
+		block.grid_pos = pos
 
+		# Scale block to fit the cell size
+		var texture_size = block.get_node("Sprite2D").texture.get_size()
+		block.scale = Vector2(- cell_size.x / texture_size.x,- cell_size.y / texture_size.y)
+		
+		# FIXME: Intendo de hacer que se muestre el blockPair donde va FIXME 
+		#show_queued_block(block)
+		
+		current_blocks.append(block)
+		add_child(block)
+		board[pos.x][pos.y] = block  # Mark the grid as occupied
+
+func create_block_pair() -> BlockPair:
+	var next_block : BlockPair = ref_block_scene.instantiate()
+	next_block.set_random_type()
+	print("Block pair colors: ",next_block.color_type)
+	return next_block
+
+func show_queued_block(block: Node2D):
+	var next_block: Node2D = block.duplicate(8)
+	ref_next_block_pos.add_child(next_block)
+	
 func apply_gravity():
 	var block_moved = false
 	var new_pair_needed = false
@@ -166,7 +178,7 @@ func move_Block(Block: Variant, to_pos: Vector2):
 		await movement_finished  # Wait for previous movement to finish
 	block_moving = true  # Lock movement process
 	if Block:
-		Block.position = grid_manager.get_cell_center(to_pos.x, to_pos.y)
+		Block.position = ref_grid_manager.get_cell_center(to_pos.x, to_pos.y)
 		board[Block.grid_pos.x][Block.grid_pos.y] = null
 		Block.grid_pos = to_pos
 		board[to_pos.x][to_pos.y] = Block
