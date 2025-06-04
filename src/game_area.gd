@@ -1,11 +1,11 @@
 extends Node2D
 # Nodes representing the grid limits and cell reference
-@onready var bottom_left = $bottomLeftLimit
-@onready var top_right = $topRightLimit
-@onready var cell_top_right = $cellToprightLimit
+@export var bottom_left = Marker2D 
+@export var top_right = Marker2D 
+@export var cell_top_right = Marker2D
 
 # Preload a texture for the sprites
-var sprite_texture = preload("res://assets/opcion_3.png")  # Replace with the actual texture path
+@export var sprite_texture: CompressedTexture2D
 
 # Function to get the size of a single cell
 func get_cell_size() -> Vector2:
