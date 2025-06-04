@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bikg20lmcmbxl"]
+[gd_scene load_steps=13 format=3 uid="uid://bikg20lmcmbxl"]
 
 [ext_resource type="Texture2D" uid="uid://dufhii16cqsxg" path="res://assets/Sprites.png" id="1_0e48y"]
 [ext_resource type="Script" uid="uid://d3v2fcihyutup" path="res://src/game_area.gd" id="2_epypp"]
@@ -7,27 +7,19 @@
 [ext_resource type="Script" uid="uid://dhfrqymt8a10o" path="res://src/game_manager.gd" id="3_epypp"]
 [ext_resource type="FontFile" uid="uid://ba4wb48gr6auk" path="res://assets/font/GochiHand-Regular.ttf" id="6_ryrav"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_0hol4"]
-atlas = ExtResource("1_0e48y")
-region = Rect2(0, 0, 213, 288)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_q6r6c"]
-atlas = ExtResource("1_0e48y")
-region = Rect2(213, 0, 213, 288)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_kdubu"]
-atlas = ExtResource("1_0e48y")
-region = Rect2(426, 0, 213, 288)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_d21ai"]
-atlas = ExtResource("1_0e48y")
-region = Rect2(639, 0, 213, 288)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_rj586"]
 atlas = ExtResource("1_0e48y")
 region = Rect2(852, 0, 213, 288)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_4d7sh"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_ryrav"]
+atlas = ExtResource("1_0e48y")
+region = Rect2(852, 0, 213, 288)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eow3j"]
+atlas = ExtResource("1_0e48y")
+region = Rect2(0, 0, 213, 288)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j5wjh"]
 atlas = ExtResource("1_0e48y")
 region = Rect2(1065, 0, 213, 288)
 
@@ -35,25 +27,27 @@ region = Rect2(1065, 0, 213, 288)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_0hol4")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_q6r6c")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_kdubu")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_d21ai")
-}, {
-"duration": 1.0,
 "texture": SubResource("AtlasTexture_rj586")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_4d7sh")
 }],
-"loop": true,
+"loop": false,
 "name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_ryrav")
+}, {
+"duration": 1.8,
+"texture": SubResource("AtlasTexture_eow3j")
+}, {
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_j5wjh")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_ryrav")
+}],
+"loop": false,
+"name": &"nam",
 "speed": 5.0
 }]
 
@@ -66,11 +60,12 @@ shadow_size = 22
 shadow_color = Color(0, 0, 0, 0.329412)
 shadow_offset = Vector2(0.51, 1)
 
-[node name="game" type="Node2D" node_paths=PackedStringArray("ref_grid_manager", "ref_next_block_pos")]
+[node name="game" type="Node2D" node_paths=PackedStringArray("ref_grid_manager", "ref_next_block_pos", "ref_nam_sprite")]
 script = ExtResource("3_epypp")
 ref_grid_manager = NodePath("GridManager")
 ref_block_scene = ExtResource("2_ryrav")
 ref_next_block_pos = NodePath("NextBlock")
+ref_nam_sprite = NodePath("ham")
 gravity_interval = 0.522
 
 [node name="NextBlock" type="Marker2D" parent="."]
@@ -99,6 +94,7 @@ expand_mode = 1
 position = Vector2(1001, 302)
 scale = Vector2(0.937206, 0.937206)
 sprite_frames = SubResource("SpriteFrames_ir8iy")
+autoplay = "default"
 
 [node name="GridManager" type="Node2D" parent="."]
 script = ExtResource("2_epypp")

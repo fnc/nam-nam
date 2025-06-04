@@ -5,7 +5,7 @@ extends Node
 @export var ref_grid_manager = Node2D
 @export var ref_block_scene: PackedScene  # Replace with actual Block scene
 @export var ref_next_block_pos: Marker2D # Reference position about where to show what is the next block
-
+@export var ref_nam_sprite: AnimatedSprite2D # Sprite del hamster
 #gravity
 var time_elapsed = 0.0
 @export var gravity_interval = 0.5  # Configurable lapse
@@ -25,6 +25,7 @@ var score = 0
 
 func update_score(amount):
 	score += amount  # Increase score
+	
 	if score < 0:
 		game_over()
 	$ScoreLabel.text = str(score)  # Update UI text
@@ -206,6 +207,7 @@ func check_for_matches() -> bool:
 	if matches.size() > 0:
 		update_score( 2 * matches.size() + bonus)
 		AudioManager.eat.play() # Play eating SFX
+		ref_nam_sprite.play("nam") # Play Animation
 		return true
 	return false
 
