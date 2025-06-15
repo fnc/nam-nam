@@ -157,7 +157,7 @@ pitch_scale = 1.88
 
 [node name="BgMusic" type="AudioStreamPlayer" parent="Mx"]
 stream = ExtResource("19_hokuy")
-volume_db = -18.0
+volume_db = -9.0
 autoplay = true
 bus = &"MX"
 playback_type = 1
